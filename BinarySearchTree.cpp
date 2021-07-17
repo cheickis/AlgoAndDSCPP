@@ -151,8 +151,10 @@ int BinarySearchTree::hashPathSum(Node* root, int sum)
 Given a binary tree, print out all of its root-to-leaf
 paths, one per line. Uses a recursive helper to do the work.
 */
-void BinarySearchTree::printPaths()
+void BinarySearchTree::printPaths(Node * root)
 {
+	int path[1000];
+	printPathsHelper(root, path, 0);
 }
 
 void printPathsHelper(Node* node, int path[], int pathlen) {
@@ -191,15 +193,21 @@ So the tree...
 		1   3
 is changed to...
 			4
-			/ \
-			5 2
-			/ \
-			3 1
+		   / \
+		  5   2
+			 / \
+			3   1
 
 */
-bool BinarySearchTree::mirror()
+void BinarySearchTree::mirror(Node *root)
 {
-	return false;
+	if (root == NULL) return;
+	mirror(root->left);
+	mirror(root->right);
+	Node* temp = root->left;
+	root->left = root->right;
+	root->right = temp;
+	
 }
 
 void BinarySearchTree::doubleTree()

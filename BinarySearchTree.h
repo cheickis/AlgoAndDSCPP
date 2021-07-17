@@ -73,8 +73,8 @@ private:
      void printPreOrder(Node *root);
 
      int hashPathSum(Node *root, int sum);
-     void printPaths();
-	 bool mirror();
+     void printPaths(Node *root);
+	 void mirror(Node *root);
      void doubleTree();
 	 void sameTree();
 	 int  countTrees();
