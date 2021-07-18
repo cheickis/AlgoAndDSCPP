@@ -157,7 +157,7 @@ void BinarySearchTree::printPaths(Node * root)
 	printPathsHelper(root, path, 0);
 }
 
-void printPathsHelper(Node* node, int path[], int pathlen) {
+void BinarySearchTree::printPathsHelper(Node* node, int path[], int pathlen) {
 	if (node == NULL) return;
 	path[pathlen] = node->data;
 	pathlen++;
@@ -175,13 +175,14 @@ void printPathsHelper(Node* node, int path[], int pathlen) {
 
 }
 
-void printArray(int ints[], int len) {
+void BinarySearchTree::printArray(int ints[], int len) {
 	for (int i =0 ; i < len; i++) {
 	
 		std::cout << ints[i];
 	}
 
 }
+
 /*
 Change a tree so that the roles of the
 left and right pointers are swapped at every node.
@@ -210,20 +211,77 @@ void BinarySearchTree::mirror(Node *root)
 	
 }
 
-void BinarySearchTree::doubleTree()
-{
-}
+/*
+For each node in a binary search tree,
+create a new duplicate node, and insert
+the duplicate as the left child of the original node.
+*/
+void BinarySearchTree::doubleTree(Node *node)
+{ 
+	Node* oldleft;
+	if (node == NULL) return;
+	doubleTree(node->left);
+	doubleTree(node->right);
+	oldleft = node->left;
+	node->left = NewNode(node->data);
+	node->left->left = oldleft;
 
-void BinarySearchTree::sameTree()
-{
 }
-
-int BinarySearchTree::countTrees()
+/*
+Given two trees, return true if they are
+structurally identical.
+*/
+int BinarySearchTree::sameTree(Node * a, Node *b)
 {
-	return 0;
-}
-
-bool BinarySearchTree::isBST()
-{
+	if (a == NULL && b == NULL) return true;
+	else if (a != NULL && b != NULL) {
+		return (a->data == b->data) && sameTree(a->left, b->left)
+			&& sameTree(a->right, b->right);
+	}
+	else
 	return false;
+	
+
+
+}
+/*
+For the key values 1...numKeys, how many structurally unique
+binary search trees are possible that store those keys.
+*/
+
+int BinarySearchTree::countTrees(int numKeys) {
+	if (numKeys <= 1)
+		return 1;
+	int sum = 0;
+	int left, right, root;
+	for (root = 1; root <= numKeys; root++) {
+		left = countTrees(root - 1);
+		right = countTrees(numKeys - root);
+		sum += left * right;
+	}
+	return sum;
+}
+
+bool BinarySearchTree::isBST(Node *root)
+{
+	if (root == NULL)
+		return true;
+	if ((root->left != NULL && root->left->data >= root->data)
+		||
+		(root->right!=NULL && root->data>= root->right->data)) {
+		return false;
+	}
+	return isBST(root->left) && isBST(root->right);
+	
+}
+
+
+bool BinarySearchTree::isABSTUtil(Node* node, int min, int max)
+{
+	if (node == NULL) return true;
+	if ((node->data < min) || (node->data > max)) return false;
+	
+
+	return isABSTUtil(node->left, min, node->data) && 
+		isABSTUtil(node->right, node->data, max);
 }

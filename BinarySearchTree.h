@@ -75,11 +75,14 @@ private:
      int hashPathSum(Node *root, int sum);
      void printPaths(Node *root);
 	 void mirror(Node *root);
-     void doubleTree();
-	 void sameTree();
-	 int  countTrees();
-     bool isBST();
+     void doubleTree(Node *node);
+	 int sameTree(Node *, Node *);
+	 int  countTrees(int numKeys);
+     bool isBST(Node *root);
 
+	 void printPathsHelper(Node* node, int path[], int len);
+	 void printArray(int path[], int);
+	 bool isABSTUtil(Node* node, int min, int max);
 
 };
 
