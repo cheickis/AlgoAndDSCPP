@@ -264,14 +264,7 @@ int BinarySearchTree::countTrees(int numKeys) {
 
 bool BinarySearchTree::isBST(Node *root)
 {
-	if (root == NULL)
-		return true;
-	if ((root->left != NULL && root->left->data >= root->data)
-		||
-		(root->right!=NULL && root->data>= root->right->data)) {
-		return false;
-	}
-	return isBST(root->left) && isBST(root->right);
+	return isABSTUtil(root, INT_MIN, INT_MAX);
 	
 }
 
